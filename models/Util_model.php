@@ -6,12 +6,22 @@ class Util_model extends \CI_Model {
 
 	public function insert_update( $table, $data, $where_keys = array() )
 	{
-		$id = $this->insert_single( $table, $data );
+		$id = $this->generic_insert( $table, $data );
 
 		foreach ($where_keys as $key => $value) {
 			$this->db->where($key, $value );
 		}
 		$this->db->update($table, $data );
+	}
+
+	public function insert_on_duplicate_update( $table, $data, $update_fields = [] )
+	{
+		$update_str = [];
+		foreach ($update_fields as $field) {
+			$update_str[] = "{$field} = '{$data[$field]}'";
+		}
+		$sql = $this->db->insert_string($table, $data) . "\n ON DUPLICATE KEY UPDATE ".implode(', ', $update_str);
+		$this->db->query($sql);
 	}
 
 	public function insert_update_batch($table, $items, $where_keys = array() )
