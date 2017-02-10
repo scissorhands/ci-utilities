@@ -43,7 +43,7 @@ class Migrate extends \CI_Controller
 		$pos = array_search($current, $keys);
 		echo json_encode( 
 			array(
-				"current_version"=> array($current=>$this->migrationList[$current]),
+				"current_version"=> isset($this->migrationList[$current])? [$current=>$this->migrationList[$current]] : [],
 				"pending" => array_slice($this->migrationList, $pos+1)
 			)
 		);
