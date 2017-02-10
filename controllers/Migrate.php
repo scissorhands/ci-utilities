@@ -113,6 +113,10 @@ class Migrate extends \CI_Controller
 		echo json_encode( array( "new_migration" => $now."_".$name.".php") );
 	}
 
+	public function get_next( $migration_name = 'migration_name' )
+	{
+		$this->get_next_version( $migration_name );
+	}
 }
 
 /* End of file Migrate.php */
