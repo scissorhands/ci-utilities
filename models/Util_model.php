@@ -18,7 +18,8 @@ class Util_model extends \CI_Model {
 	{
 		$update_str = [];
 		foreach ($update_fields as $field) {
-			$update_str[] = "{$field} = '{$data[$field]}'";
+			$val = $this->db->escape($data[$field]);
+			$update_str[] = "{$field} = {$val}";
 		}
 		$sql = $this->db->insert_string($table, $data) . "\n ON DUPLICATE KEY UPDATE ".implode(', ', $update_str);
 		$this->db->query($sql);
@@ -51,6 +52,11 @@ class Util_model extends \CI_Model {
 		return $this->db->insert_id();
 	}
 
+	public function insert_single( $table, $data )
+	{
+		$this->generic_insert( $table, $data );
+	}
+
 	public function generic_delete( $table, $where_clause = array() )
 	{
 		$this->db->where($where_clause)->delete($table);
@@ -75,6 +81,13 @@ class Util_model extends \CI_Model {
 	{
 		$query = $this->db->where($where_clause)->get($table);
 		return $query->result()? ( $all_rows? $query->result() : $query->row() ) : null;
+	}
+
+	public function table_exists( $table_name )
+	{
+		return $this->db->from("INFORMATION_SCHEMA.tables")
+		->where('TABLE_NAME', $table_name)
+		->where('TABLE_SCHEMA', $this->db->database)->get()->result();
 	}
 }
 
