@@ -44,7 +44,7 @@ class Migrate extends \CI_Controller
 		echo json_encode( 
 			array(
 				"current_version"=> isset($this->migrationList[$current])? [$current=>$this->migrationList[$current]] : [],
-				"pending" => array_slice($this->migrationList, $pos+1)
+				"pending" => !$current ? $this->migrationList : array_slice($this->migrationList, $pos+1)
 			)
 		);
 	}
@@ -60,7 +60,11 @@ class Migrate extends \CI_Controller
 		$current = $this->get_current();
 		$keys = array_keys( $this->migrationList );
 		$pos = array_search($current, $keys);
-		$next = isset($keys[$pos+1])? $keys[$pos+1] : null;
+		if(!$pos){
+			$next = $keys[0];
+		} else {
+			$next = isset($keys[$pos+1])? $keys[$pos+1] : null;
+		}
 		if($next){
 			$this->run_by_version( $next );
 		} else {
@@ -71,11 +75,12 @@ class Migrate extends \CI_Controller
 	public function run_previous()
 	{
 		$current = $this->get_current();
+
 		$keys = array_keys( $this->migrationList );
 		$pos = array_search($current, $keys);
-		$this->run_by_version( $keys[$pos-1] );
+		$this->run_by_version( $pos? $keys[$pos-1] : 0 );
 	}
-
+	
 	public function get_all_versions()
 	{
 		echo json_encode( $this->migrationList, false );
