@@ -54,7 +54,7 @@ class Util_model extends \CI_Model {
 
 	public function insert_single( $table, $data )
 	{
-		$this->generic_insert( $table, $data );
+		return $this->generic_insert( $table, $data );
 	}
 
 	public function generic_delete( $table, $where_clause = array() )

@@ -60,7 +60,7 @@ class Migrate extends \CI_Controller
 		$current = $this->get_current();
 		$keys = array_keys( $this->migrationList );
 		$pos = array_search($current, $keys);
-		if(!$pos){
+		if($pos === false){
 			$next = $keys[0];
 		} else {
 			$next = isset($keys[$pos+1])? $keys[$pos+1] : null;
@@ -80,7 +80,7 @@ class Migrate extends \CI_Controller
 		$pos = array_search($current, $keys);
 		$this->run_by_version( $pos? $keys[$pos-1] : 0 );
 	}
-	
+
 	public function get_all_versions()
 	{
 		echo json_encode( $this->migrationList, false );
