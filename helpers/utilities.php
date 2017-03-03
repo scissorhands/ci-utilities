@@ -9,7 +9,7 @@ function dump( $var, $text = false )
 		exit;
 	} else{
 		header('Content-Type: application/json');
-		json_encode($var);
+		echo json_encode($var);
         exit;
 	}
 }
