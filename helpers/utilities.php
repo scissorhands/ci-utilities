@@ -262,7 +262,7 @@ function is_cli_request()
     return php_sapi_name() == 'cli' ? true : false;
 }
 
-public function cron_response($var)
+function cron_response($var)
 {
     if(is_cli_request()){
         print_r( $var );
