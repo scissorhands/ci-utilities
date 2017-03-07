@@ -2,16 +2,16 @@
 
 function dump( $var, $text = false )
 {
-	if( $text ){
-		echo "<pre>";
-			print_r($var);
-		echo "</pre>";
-		exit;
-	} else{
-		header('Content-Type: application/json');
-		echo json_encode($var);
+    if( $text ){
+        echo "<pre>";
+            print_r($var);
+        echo "</pre>";
         exit;
-	}
+    } else{
+        header('Content-Type: application/json');
+        echo json_encode($var);
+        exit;
+    }
 }
 
 function inspect( $var )
@@ -22,7 +22,7 @@ function inspect( $var )
 
 function generate_uri_hash()
 {
-	return md5(rand().microtime());
+    return md5(rand().microtime());
 }
 
 function time_format(
@@ -131,6 +131,10 @@ function get_date_diff( $date1="2015-01-01", $date2="2015-01-15" )
     return $interval;
 }
 
+function has_time_passed( $time_to_check_against, $time ){
+    return strtotime($time_to_check_against) <= strtotime($time);
+}
+
 function valid_future_date( $date )
 {
     $diff = get_date_diff(date("Y-m-d"), $date );
@@ -164,23 +168,23 @@ function obj_array_to_indexed_array($obj_array, $index_field, $value_field, $val
 {
     $arr = array();
     foreach ($obj_array as $row) {
-		switch ($value_type) {
-			case 'bool':
-    			$arr[$row->$index_field] = (bool) $row->$value_field;
-				break;
-			case 'int':
-    			$arr[$row->$index_field] = (int) $row->$value_field;
-				break;
-			case 'float':
-    			$arr[$row->$index_field] = (float) $row->$value_field;
-				break;
-			case 'double':
-    			$arr[$row->$index_field] = (double) $row->$value_field;
-				break;
-			default:
-    			$arr[$row->$index_field] = $row->$value_field;
-				break;
-		}
+        switch ($value_type) {
+            case 'bool':
+                $arr[$row->$index_field] = (bool) $row->$value_field;
+                break;
+            case 'int':
+                $arr[$row->$index_field] = (int) $row->$value_field;
+                break;
+            case 'float':
+                $arr[$row->$index_field] = (float) $row->$value_field;
+                break;
+            case 'double':
+                $arr[$row->$index_field] = (double) $row->$value_field;
+                break;
+            default:
+                $arr[$row->$index_field] = $row->$value_field;
+                break;
+        }
     }
     return $arr;
 }
