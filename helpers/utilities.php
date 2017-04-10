@@ -190,25 +190,27 @@ function obj_array_to_indexed_array($obj_array, $index_field, $value_field, $val
 }
 
 function echolor( $text = '', $color = 'white'){
-    $color_code = [
-        'black'=> '30',
-        'blue'=> '34',
-        'green'=> '32',
-        'cyan'=> '36',
-        'red'=> '31',
-        'purple'=> '35',
-        'brown'=> '33',
-        'light_gray'=> '1;37', 
-        'dark_gray'=> '1;30',
-        'light_blue'=> '1;34',
-        'light_green'=> '1;32',
-        'light_cyan'=> '1;36',
-        'light_red'=> '1;31',
-        'light_purple'=> '35',
-        'yellow'=> '33',
-        'white'=> '37'
-    ];
-    echo isset($color_code[$color])? "\033[".$color_code[$color]."m$text\033[0m \n" : $text."\n";
+    if(is_cli_request()){
+        $color_code = [
+            'black'=> '30',
+            'blue'=> '34',
+            'green'=> '32',
+            'cyan'=> '36',
+            'red'=> '31',
+            'purple'=> '35',
+            'brown'=> '33',
+            'light_gray'=> '1;37', 
+            'dark_gray'=> '1;30',
+            'light_blue'=> '1;34',
+            'light_green'=> '1;32',
+            'light_cyan'=> '1;36',
+            'light_red'=> '1;31',
+            'light_purple'=> '35',
+            'yellow'=> '33',
+            'white'=> '37'
+        ];
+        echo isset($color_code[$color])? "\033[".$color_code[$color]."m$text\033[0m \n" : $text."\n";
+    }
 }
 
 function form_errors(){
