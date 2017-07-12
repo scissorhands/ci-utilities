@@ -217,21 +217,25 @@ function form_errors(){
     return validation_errors('<div class="alert alert-danger">', '</div>');
 }
 
-function api_response($data = null, $success = true, $response_code = 200 )
+function api_response($data = null, $success = true, $response_code = 200, $custom_data = null )
 {
     http_response_code($response_code);
     header('access-control-allow-origin: *');
     if( $success ){
-        dump( [
+        $response = [
             'status' => 'success',
             'data' => $data
-        ]);
+        ];
     } else {
-        dump( [
+        $response = [
             'status' => 'error',
             'message' => $data
-        ]);
+        ];
     }
+    if($custom_data){
+        $response['custom_data'] = $custom_data;
+    }
+    dump( $response, false );
 }
 
 function api_allowed_options( $options = 'GET,POST' ){
