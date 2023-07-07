@@ -3,7 +3,7 @@
     "description": "Some utilities to work on CodeIgniter Framework",
     "type": "library",
     "require": {
-        "php": "^5.5|^7.0"
+        "php": "^5.5|^8.0"
     },
     "license": "MIT",
     "authors": [
